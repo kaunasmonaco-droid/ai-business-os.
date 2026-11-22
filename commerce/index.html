@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="lt">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b1019">
+<title>AI COMMERCE | AI BUSINESS OS</title>
+<meta name="description" content="AI COMMERCE – skaitmeninių B2B paslaugų ir ateities prekybos laboratorija. Demonstracija, užsakymai dar nepriimami.">
+<style>
+:root{--bg:#080c13;--panel:#101a25;--line:#27394c;--text:#edf4fc;--muted:#9cb1c7;--red:#ef5267;--green:#7ae1be;--blue:#87b9fa}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 75% -10%,#1c2940,transparent 52%),var(--bg);color:var(--text);font:15px/1.55 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+a{color:inherit}button,input{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+header{position:sticky;top:0;z-index:5;background:#0c1118f4;backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.headin{max-width:1140px;margin:auto;padding:13px 20px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.logo{font-weight:900;font-size:17px;letter-spacing:.02em}.logo b{color:var(--red)}.tiny{font-size:11px;color:var(--muted);display:block;letter-spacing:.16em;font-weight:750}
+.chip{border:1px solid #67513d;background:#2b241e;padding:7px 11px;border-radius:99px;color:#ffd19a;font-size:11px;font-weight:800}
+main{max-width:1140px;margin:auto;padding:30px 20px 70px}.hero{padding:30px 0 24px;display:grid;grid-template-columns:minmax(0,1.4fr) minmax(220px,.6fr);gap:20px;align-items:center}
+.eyebrow{font-size:11px;letter-spacing:.18em;color:#98afd0;font-weight:800}.hero h1{font-size:clamp(36px,5.5vw,67px);line-height:1.04;letter-spacing:-.05em;margin:11px 0 20px}.hero h1 em{font-style:normal;color:var(--red)}.intro{color:#b5c8da;max-width:620px;font-size:16px}
+.panel,.product{border:1px solid var(--line);background:linear-gradient(130deg,#162233,#101922);border-radius:17px;padding:20px;min-width:0}
+.hero .panel strong{font-size:15px}.hero .panel ul{margin:12px 0;padding-left:20px;color:#bad0df;font-size:13px}.hero .panel li{margin:10px 0}
+h2{font-size:23px;letter-spacing:-.02em;margin:29px 0 13px}.desc{color:var(--muted);font-size:13px}
+.products{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:16px}.product{display:flex;flex-direction:column;gap:11px}
+.product h3{font-size:18px;line-height:1.25;margin:0}.product p{color:#b0c4d7;font-size:13px;margin:0}.pill{font-size:11px;color:#a7ddff;font-weight:850;letter-spacing:.08em}.price{font-size:24px;font-weight:850;margin-top:auto}.price small{font-weight:550;font-size:11px;color:#a6bbcf}
+.actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:5px}.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:#1b2b3d;color:#eff8ff;border:1px solid #41607c;padding:11px 13px;border-radius:10px;font-size:13px;font-weight:700;min-height:44px;text-decoration:none}.btn.red{background:#cc3d52;border-color:#e0546a}.btn:hover{filter:brightness(1.14)}
+.notice{background:#191e2a;border-left:4px solid #ffbd72;border-radius:10px;padding:14px 16px;margin:20px 0;font-size:13px;color:#e6cba5}
+.workflow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}.step{padding:17px 12px;border:1px solid #314153;border-radius:12px;background:#14202d}.step strong{font-size:12px;display:block}.step span{font-size:11px;color:#92afc5}
+.info{display:grid;grid-template-columns:1fr 1fr;gap:14px}.info .panel h3{margin:0 0 9px;font-size:15px}
+dialog{background:#121d2a;color:#eff6ff;border:1px solid #526c84;border-radius:17px;width:min(560px,calc(100vw - 26px));padding:22px;max-height:86vh;overflow:auto;box-shadow:0 30px 90px #000a}dialog::backdrop{background:#000c}
+dialog h3{font-size:23px;margin:0 0 8px}dialog p{color:#b6c9db;font-size:13px}dialog ul{color:#b9cddd;font-size:13px;padding-left:22px}
+label{display:block;color:#91aeca;font-size:12px;font-weight:700;margin-bottom:5px}input{width:100%;color:#f0f6fb;background:#0b1521;border:1px solid #41546a;border-radius:10px;padding:12px}
+.calc{border-top:1px solid #314257;margin-top:15px;padding-top:13px}.calc strong{font-size:20px;color:var(--green)}.footer{border-top:1px solid var(--line);color:#8a9fb4;font-size:11px;margin-top:40px;padding-top:20px}
+@media(max-width:760px){.hero{grid-template-columns:1fr}.products{grid-template-columns:1fr}.workflow{grid-template-columns:1fr 1fr}.info{grid-template-columns:1fr}.hero{padding-top:18px}.hero h1{font-size:38px}}
+@media(max-width:360px){.headin{padding:12px}.workflow{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header><div class="headin"><div><div class="logo">AI BUSINESS <b>OS</b> <span style="color:#7797b9">/ COMMERCE</span></div><span class="tiny">AGENTIC REVENUE LAB</span></div><span class="chip">DEMO · 0 € starto infrastruktūra</span></div></header>
+<main>
+<section class="hero">
+<div><div class="eyebrow">NAUJA AI BUSINESS OS KRYPTIS</div><h1>AI <em>COMMERCE.</em></h1><p class="intro">Skaitmeninių B2B paslaugų katalogas ir būsimos AI valdomos elektroninės prekybos pagrindas. Vienas tikslas – patikrinami pasiūlymai, aiškūs verslo procesai ir reali marža, o ne atsitiktinės prekės.</p><div class="actions"><a class="btn" href="../">← AI BUSINESS OS valdymo centras</a><a class="btn red" href="#catalog">Peržiūrėti katalogą ↓</a></div></div>
+<div class="panel"><strong>AI agentų grandinė</strong><ul><li>XI – strategija ir prioritetai</li><li>PUTIN – rinkos ir pasiūlos tyrimai</li><li>TRUMP – pasiūlymų juodraščiai</li><li>SARGAS – duomenų, kainų ir leidimų kontrolė</li><li>SAVININKAS – sprendimas prieš pardavimą</li></ul><span class="desc">Šie vaidmenys dar nėra autonomiškai šiame puslapyje dirbantys AI.</span></div>
+</section>
+<div class="notice"><strong>Sąžininga versija:</strong> šiuo metu tai viešas prekybos modulio prototipas. Nepriimami mokėjimai, nepateikiami tikri prekių likučiai ir nesudaromos sutartys. Pasiūlymų paketai yra koncepciniai iki patvirtinto pardavėjo, sąlygų ir mokėjimų sistemos.</div>
+<section id="catalog"><h2>Skaitmeninių B2B paslaugų katalogas</h2><p class="desc">Šios paslaugos geriausiai išnaudoja jau turimus AI BUSINESS OS tyrimų ir CRM įrankius.</p>
+<div class="products">
+<article class="product"><div class="pill">01 / LEAD INTELLIGENCE</div><h3>10 potencialių B2B pirkėjų</h3><p>Viena produktų grupė, viena pasirinkta rinka, vieši šaltiniai, atrankos pagrindimas ir potencialių kontaktų patikra.</p><div class="price">199 € <small>siūloma bandomojo projekto kaina</small></div><button class="btn red" data-product="buyers">Peržiūrėti paslaugą →</button></article>
+<article class="product"><div class="pill">02 / SUPPLIER INTELLIGENCE</div><h3>Tiekėjų paieška ir kvalifikavimas</h3><p>Alternatyvių tiekėjų tyrimas pagal gamybos, tiekimo ar kokybės kriterijus. Pateikiami patikrinti šaltiniai.</p><div class="price">Pagal užklausą</div><button class="btn" data-product="suppliers">Peržiūrėti paslaugą →</button></article>
+<article class="product"><div class="pill">03 / MARKET ANALYSIS</div><h3>Konkurentų ir rinkos žvalgyba</h3><p>Konkurentų palyginimas, pasiūlos segmentai, viešos kainos ir įėjimo į rinką galimybių analizė.</p><div class="price">Pagal užklausą</div><button class="btn" data-product="market">Peržiūrėti paslaugą →</button></article>
+</div></section>
+<section><h2>Kaip veiktų tikra prekyba</h2><div class="workflow"><div class="step"><strong>1. SCOUT</strong><span>Paklausos ir tiekėjų paieška</span></div><div class="step"><strong>2. QUAL</strong><span>Kokybės ir maržos patikra</span></div><div class="step"><strong>3. OFFER</strong><span>Patvirtintas pasiūlymas</span></div><div class="step"><strong>4. ORDER</strong><span>Saugus apmokėjimas per mokėjimo tiekėją</span></div><div class="step"><strong>5. FULFIL</strong><span>Užsakymo vykdymas ir aptarnavimas</span></div></div></section>
+<section><h2>Plėtros modeliai</h2><div class="info"><div class="panel"><h3>A. Paslaugos ir skaitmeniniai produktai</h3><p class="desc">Mažiausios pradinės operacinės išlaidos. Reikia patikrintų duomenų, aiškios paslaugos apimties ir juridinio atsiskaitymo pagrindo.</p></div><div class="panel"><h3>B. Dropshipping / Print-on-demand</h3><p class="desc">Galima prijungti vėliau. Reikia realaus tiekėjo sutarties, produktų duomenų, pristatymo ir grąžinimo sąlygų, apmokėjimo būdo ir klientų aptarnavimo.</p></div></div></section>
+<div class="footer">AI BUSINESS OS · AI COMMERCE LAB · DEMO. Katalogo kainos nėra įpareigojantis komercinis pasiūlymas. Jokios tikros klientų informacijos, užsakymų ar bankinių duomenų šiame prototipe nėra.</div>
+</main>
+<dialog id="detail" aria-labelledby="detailTitle"><h3 id="detailTitle"></h3><p id="detailText"></p><ul id="deliverables"></ul><div class="calc"><label for="units">Kiek analogiškų projektų planuojama?</label><input id="units" type="number" value="1" min="1" max="20" inputmode="numeric"><p id="estimate"></p><p class="desc">Skaičiavimas tik orientacinis, ne pajamų prognozė.</p></div><div class="actions"><button class="btn" id="closeDetail">Uždaryti</button><button class="btn red" id="copyBrief">Kopijuoti užklausos šabloną</button></div><p id="copyFeedback" role="status"></p></dialog>
+<script>
+const products={
+buyers:{title:'10 potencialių B2B pirkėjų',text:'7 darbo dienų pilotas (siūloma apimtis). Reikalingas konkretus gaminio ir rinkos apibrėžimas.',price:199,items:['10 įmonių kandidatų su viešais interneto šaltiniais','Trumpas kiekvieno kandidato atitikties paaiškinimas','Vieši B2B kontaktavimo kanalai (jeigu prieinami)','Nėra garantuoto pirkimo poreikio, užsakymų ar klientų atsakymų']},
+suppliers:{title:'Tiekėjų kvalifikavimo tyrimas',text:'Tiekėjų palyginimas pagal pirkėjo patvirtintus kriterijus.',price:0,items:['Kriterijų sąrašas','Šaltinių ir įmonių palyginimas','Rizikos ir nepatikrintų duomenų žymėjimas','Galutinė apimtis ir kaina derinamos atskirai']},
+market:{title:'Rinkos ir konkurentų žvalgyba',text:'Viešai patikrinamais duomenimis paremta konkrečios nišos apžvalga.',price:0,items:['Rinkos klausimo suformulavimas','Konkurentų šaltiniai','Aiškūs patikrinti faktai ir hipotezės','Kaina nustatoma tik patvirtinus apimtį']}};
+const dialog=document.getElementById('detail'),count=document.getElementById('units'),out=document.getElementById('estimate');let current='buyers';
+function recompute(){const p=products[current],n=Math.max(1,Math.min(20,parseInt(count.value,10)||1));out.innerHTML=p.price?'Orientacinė bendra pasiūlymų vertė: <strong>'+new Intl.NumberFormat('lt-LT',{style:'currency',currency:'EUR'}).format(n*p.price)+'</strong>':'<strong>Kaina tik pagal individualią apimtį.</strong>'}
+document.querySelectorAll('[data-product]').forEach(btn=>btn.addEventListener('click',()=>{current=btn.dataset.product;const p=products[current];document.getElementById('detailTitle').textContent=p.title;document.getElementById('detailText').textContent=p.text;document.getElementById('deliverables').replaceChildren(...p.items.map(x=>{const li=document.createElement('li');li.textContent=x;return li}));count.value='1';recompute();document.getElementById('copyFeedback').textContent='';dialog.showModal()}));
+document.getElementById('closeDetail').addEventListener('click',()=>dialog.close());
+count.addEventListener('input',recompute);
+document.getElementById('copyBrief').addEventListener('click',async()=>{const p=products[current];const content='AI COMMERCE užklausos projektas (DEMO)\nPaslauga: '+p.title+'\nUžduoties tikslas: [įrašyti]\nTikslinė rinka: [įrašyti]\nKriterijai: [įrašyti]\nSvarbu: mokėjimai šiuo metu nepriimami.';try{await navigator.clipboard.writeText(content);document.getElementById('copyFeedback').textContent='Šablonas nukopijuotas.'}catch(e){document.getElementById('copyFeedback').textContent='Kopijavimas nepalaikomas šioje naršyklėje.'}});
+</script>
+</body></html>
