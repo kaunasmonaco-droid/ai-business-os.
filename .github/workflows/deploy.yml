@@ -19,6 +19,28 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Validate dashboard syntax and assets
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import json, re, subprocess, tempfile, os
+          page = Path('index.html').read_text()
+          assert '<!doctype html>' in page.lower()
+          for identifier in ['id="view-dashboard"', 'id="mobile-nav"', 'id="copyShareLink"', 'id="installGuide"']:
+              assert identifier in page, f'Missing {identifier}'
+          manifest = json.loads(Path('manifest.webmanifest').read_text())
+          assert manifest['display'] == 'standalone'
+          assert Path('icon.svg').is_file()
+          assert 'kaunasmonaco@gmail.com' not in page
+          js_list = re.findall(r'<script(?:\\s[^>]*)?>(.*?)</script>', page, flags=re.S | re.I)
+          assert len(js_list) >= 2, 'Missing scripts'
+          for i, js in enumerate(js_list):
+              dest = f'/tmp/ai-business-os-{i}.js'
+              Path(dest).write_text(js)
+              subprocess.run(['node', '--check', dest], check=True)
+              os.unlink(dest)
+          print(f'Validated HTML basics, manifest and {len(js_list)} JavaScript blocks')
+          PY
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
       - name: Upload static website
