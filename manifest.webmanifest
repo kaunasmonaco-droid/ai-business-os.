@@ -1,0 +1,19 @@
+{
+  "name": "AI BUSINESS OS — Agentic Deal Engine",
+  "short_name": "AI BUSINESS OS",
+  "description": "AI BUSINESS OS vieša demonstracinė versija. Privatūs CRM ir Gmail duomenys čia nesinchronizuojami.",
+  "lang": "lt",
+  "start_url": "./?showcase=1",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#080b11",
+  "theme_color": "#0a0d13",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
