@@ -39,13 +39,63 @@ html.no-js .mobilebar{display:none!important}
   .table tr{padding:8px 10px}
 }
 </style>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="AI BUSINESS OS">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="description" content="AI BUSINESS OS — interaktyvus B2B agentų valdymo centro pristatymas.">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" type="image/svg+xml" href="./icon.svg">
+<meta property="og:title" content="AI BUSINESS OS | Agentic Deal Engine">
+<meta property="og:description" content="AI agentų strategija, pardavimų etapai ir verslo valdymas viename ekrane. Demonstracinė versija.">
+<meta name="robots" content="noindex,nofollow">
+<style id="public-operations-v3">
+.ops-panel{margin:17px 0;padding:17px;border:1px solid #31516a;background:linear-gradient(145deg,#142131,#101b28);border-radius:15px}
+.ops-panel h2{font-size:16px;margin:0 0 6px}
+.ops-panel p{font-size:12px;color:#abc1d7;line-height:1.6;margin:5px 0}
+.ops-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:13px}
+.ops-item{background:#0d1722;border:1px solid #304357;border-radius:10px;padding:12px;min-width:0}
+.ops-item strong{display:block;color:#e8f3ff;font-size:13px;overflow-wrap:anywhere;line-height:1.45}
+.ops-item span{display:block;color:#8ca7bd;font-size:11px;margin-top:4px}
+.ops-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}
+.ops-actions a,.ops-actions button{display:inline-flex;justify-content:center;align-items:center;border:1px solid #4c6680;color:#e8f3ff;background:#1a2b3b;border-radius:9px;padding:10px 13px;font-size:12px;font-weight:700;min-height:40px}
+.ops-actions button{cursor:pointer}
+.ops-actions .accent{background:#a93247;border-color:#c44357}
+#showcaseBanner{display:none;border:1px solid #36567a;background:#12243b;color:#dbeafa;border-radius:11px;padding:12px 14px;margin:12px 0;font-size:12px;line-height:1.5}
+html.showcase #showcaseBanner{display:block}
+html.showcase #view-tasks,html.showcase #view-approvals,html.showcase #view-audit{display:none!important}
+html.showcase .ops-private{display:none!important}
+#installGuide{display:none;margin-top:14px;padding:13px;border-left:3px solid #65a7e7;background:#17283a;border-radius:8px;font-size:12px;line-height:1.7;color:#deebfb}
+#installGuide.open{display:block}
+@media(max-width:760px){
+ .ops-grid{grid-template-columns:1fr}
+ .ops-panel{padding:15px;margin:15px 0}
+ .ops-actions a,.ops-actions button{width:100%;min-height:44px}
+}
+</style>
 </head>
 <body>
 <svg class="sr-only" xmlns="http://www.w3.org/2000/svg"><symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></symbol><symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20v-3a6 6 0 0 1 12 0v3M17 5a3 3 0 0 1 0 6m0 3a5 5 0 0 1 4 5"/></symbol><symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></symbol><symbol id="i-check" viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"/></symbol><symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 2 20 6v6c0 6-3.5 9-8 10-4.5-1-8-4-8-10V6z"/><path d="m9 12 2 2 4-4"/></symbol><symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l4 2"/></symbol><symbol id="i-database" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 4 16 4 16 0V5M4 12c0 4 16 4 16 0"/></symbol><symbol id="i-activity" viewBox="0 0 24 24"><path d="M2 12h4l3-8 6 16 3-8h4"/></symbol><symbol id="i-settings" viewBox="0 0 24 24"><path d="M12 3v3m0 12v3M3 12h3m12 0h3M5.6 5.6l2.2 2.2m8.4 8.4 2.2 2.2M18.4 5.6l-2.2 2.2m-8.4 8.4-2.2 2.2"/><circle cx="12" cy="12" r="4"/></symbol><symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="7"/><path d="m16 16 5 5"/></symbol><symbol id="i-brief" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="14" rx="2"/><path d="M8 7V4h8v3M3 13h18"/></symbol><symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></symbol><symbol id="i-external" viewBox="0 0 24 24"><path d="M14 4h6v6m0-6-9 9"/><path d="M20 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5"/></symbol><symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 4v16M4 12h16"/></symbol><symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 16v4h16v-4"/></symbol><symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9 9a3 3 0 1 1 5 2.5c-1 1-2 1.5-2 3m0 3h.01"/></symbol></svg>
 <div class="app"><div style="background:#243142;color:#dceafe;text-align:center;padding:10px;font-weight:700;font-size:12px;border-bottom:1px solid #42576d">VIEŠA DEMONSTRACIJA · jokio ryšio su Gmail, HubSpot ar asmeniniais duomenimis · jokių tikrų laiškų nesiunčia</div><div class="preview-help"><strong>iPhone failo peržiūra: interaktyvus JavaScript nepaleistas.</strong><p>Dizainas matomas, tačiau sudėtingi mygtukai čia neveiks. Žemiau pateikta navigacija ir tikros nuorodos veikia be JavaScript. Pilnai programai reikia įprasto naršyklės HTTPS adreso.</p><a href="https://drive.google.com/">Atidaryti tikrą verslo skydelį ↗</a></div><nav class="fallback-nav"><a href="#view-dashboard">Valdymas</a><a href="#view-agents">Agentai</a><a href="#view-pipeline">Pardavimai</a><a href="#view-tasks">Užduotys</a><a href="#view-approvals">Sprendimai</a><a href="#view-automations">Automatizacijos</a><a href="#view-connections">Jungtys</a></nav>
 <aside class="sidebar"><div class="brand"><div class="logo">OS</div><div class="brand-text">AI BUSINESS <b>OS</b><small>AGENTIC DEAL ENGINE</small></div></div><div><div class="sidesection">COMMAND CENTER</div><nav class="nav" id="desktop-nav"></nav></div><div class="spacer"></div><div class="sidefoot"><strong><span class="dot"></span>Vietinis valdymo centras</strong><p>Demonstraciniai pakeitimai saugomi tik šiame įrenginyje. Tiesioginio sinchronizavimo nėra.</p></div><div style="padding:0 12px;font-size:10px;color:#73889c">BUILD 1.0 · 2026-11-22</div></aside>
 <div><header class="mobile-top"><div class="brand"><div class="logo">OS</div><div class="brand-text">AI BUSINESS <b>OS</b><small>DEAL ENGINE</small></div></div><span class="pill amber">LOCAL MODE</span></header><main class="main">
-<section class="view active" id="view-dashboard">
+<section class="view active" id="view-dashboard"><div id="showcaseBanner">PRISTATYMO REŽIMAS. Matote viešą demonstracinę AI BUSINESS OS versiją; ji nesuteikia prieigos prie privačių CRM, Gmail duomenų ar mokėjimų.</div>
+<section class="ops-panel" aria-labelledby="ops-heading">
+<h2 id="ops-heading">AI BUSINESS OS · programos valdymas</h2>
+<p>Atidaroma savarankiškai telefone ir kompiuteryje. Šis puslapis – saugi vieša demonstracija; privatūs darbo procesai vykdomi atskirose prisijungimo reikalaujančiose sistemose.</p>
+<div class="ops-grid">
+<div class="ops-item"><strong id="live-code">Tikrinama…</strong><span>Viešas GitHub kodo atnaujinimas</span></div>
+<div class="ops-item"><strong id="live-deploy">Tikrinama…</strong><span>Automatinio publikavimo rezultatas</span></div>
+<div class="ops-item"><strong>DEMO · vietinis režimas</strong><span>Gmail / HubSpot nėra tiesiogiai prijungti prie šio puslapio</span></div>
+</div>
+<div class="ops-actions">
+<button type="button" id="refreshPublicStatus">Atnaujinti techninę būklę</button>
+<button type="button" id="showcaseToggle">Įjungti pristatymo režimą</button>
+<button type="button" id="installGuideToggle">Kaip pridėti į iPhone ekraną</button>
+<a class="ops-private" href="https://chatgpt.com" target="_blank" rel="noopener noreferrer">Privatus darbas „ChatGPT“ ↗</a>
+</div>
+<div id="installGuide">1. Atidaryk šį adresą tiesiogiai per <b>Safari</b> (ne ChatGPT vidinėje peržiūroje). 2. Spausk <b>Bendrinti</b> (kvadratas su rodykle). 3. Pasirink <b>Įtraukti į pradžios ekraną</b>. 4. Spausk <b>Pridėti</b>. Nuo tada „AI BUSINESS OS“ piktograma bus telefono ekrane. Duomenys šiame DEMO saugomi tik konkrečioje naršyklėje; tikram komandiniam sinchronizavimui reikalingas privatus serveris.</div>
+</section>
+
 <div class="topline"><div><div class="eyebrow">EXECUTIVE COMMAND / AI BUSINESS OS</div><h1 class="heading">Agentic <b>Deal Engine.</b></h1><p class="subhead">Vienas valdymo centras. Viena komanda. Tik patikrinti rezultatai.</p></div><div class="top-actions"><span class="pill amber" title="Tai ne realaus laiko sinchronizacija">● 2026-11-22 duomenų momentinė kopija</span><button class="btn" data-action="export"><span class="ico"><svg><use href="#i-download"/></svg></span> Atsarginė kopija</button></div></div>
 <div class="grid kpis" id="kpi-grid"><div class="card section-pad">3 neišsiųsti pasiūlymų juodraščiai · 0 € pajamų</div></div>
 <div class="card pipeline"><div class="section-title"><div><h2>DEAL EXECUTION RAIL</h2><p>Pasirink etapą, kad matytum jo reikšmę</p></div><span class="pill">7 etapai</span></div><div class="stagebar" id="stagebar"><span>INT → SCOUT → QUAL → OFFER → NEG → CLOSE → EXPAND</span></div><p id="stage-info" style="font-size:11px;color:#9bafc2;margin:12px 7px 0;min-height:18px">SCOUT – potencialių klientų ir rinkų tyrimas. Šiuo metu vykdomas pasirengimas.</p></div>
@@ -110,5 +160,47 @@ document.addEventListener('change',e=>{if(e.target.matches('[data-taskstatus]'))
 $('opp-search').addEventListener('input',renderOpps);$('import-file').addEventListener('change',e=>{readJSON(e.target.files[0]);e.target.value=''});$('modal-backdrop').addEventListener('click',e=>{if(e.target===$('modal-backdrop'))closeModal()});document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
 show('dashboard');storageWarning();
 </script>
-</body>
+<script id="public-operations-script">
+(function(){
+'use strict';
+const $ops=(id)=>document.getElementById(id);
+const repoApi='https://api.github.com/repos/kaunasmonaco-droid/ai-business-os.';
+async function fetchJson(url){
+ const ctrl=new AbortController();
+ const timer=setTimeout(()=>ctrl.abort(),10000);
+ try{const res=await fetch(url,{headers:{'Accept':'application/vnd.github+json'},signal:ctrl.signal,cache:'no-store'});if(!res.ok)throw new Error('HTTP '+res.status);return await res.json()}finally{clearTimeout(timer)}
+}
+async function refresh(){
+ const code=$ops('live-code'),deploy=$ops('live-deploy');
+ if(!code||!deploy)return;
+ code.textContent='Tikrinama…';deploy.textContent='Tikrinama…';
+ const [commit,runs]=await Promise.allSettled([
+  fetchJson(repoApi+'/commits/main'),
+  fetchJson(repoApi+'/actions/workflows/deploy.yml/runs?per_page=1')
+ ]);
+ if(commit.status==='fulfilled'&&commit.value.sha){
+  const c=commit.value;
+  const dt=c.commit?.committer?.date;
+  code.textContent=c.sha.slice(0,7)+(dt?' · '+new Date(dt).toLocaleDateString('lt-LT'):'');
+ }else{code.textContent='Nepavyko gauti duomenų'}
+ if(runs.status==='fulfilled'&&runs.value.workflow_runs?.length){
+  const run=runs.value.workflow_runs[0];
+  deploy.textContent=run.status!=='completed'?'Vykdoma':run.conclusion==='success'?'Sėkminga':run.conclusion==='failure'?'Nepavyko':'Būsena: '+(run.conclusion||'nežinoma');
+ }else{deploy.textContent='Nėra patvirtintų duomenų'}
+}
+const guide=$ops('installGuideToggle'),guidePanel=$ops('installGuide');
+if(guide&&guidePanel)guide.addEventListener('click',()=>{guidePanel.classList.toggle('open');guide.setAttribute('aria-expanded',String(guidePanel.classList.contains('open')))});
+const toggle=$ops('showcaseToggle');
+function setShowcase(on){
+ document.documentElement.classList.toggle('showcase',on);
+ if(toggle)toggle.textContent=on?'Išjungti pristatymo režimą':'Įjungti pristatymo režimą';
+ if(on&&document.querySelector('.view.active')?.id!=='view-dashboard'&&typeof show==='function')show('dashboard');
+ try{const url=new URL(location.href);if(on)url.searchParams.set('showcase','1');else url.searchParams.delete('showcase');history.replaceState(null,'',url)}catch(e){}
+}
+if(toggle)toggle.addEventListener('click',()=>setShowcase(!document.documentElement.classList.contains('showcase')));
+if(new URLSearchParams(location.search).get('showcase')==='1')setShowcase(true);
+const btn=$ops('refreshPublicStatus');if(btn)btn.addEventListener('click',refresh);
+refresh();
+})();
+</script></body>
 </html>
