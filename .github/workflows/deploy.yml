@@ -32,7 +32,7 @@ jobs:
           assert manifest['display'] == 'standalone'
           assert Path('icon.svg').is_file()
           assert 'kaunasmonaco@gmail.com' not in page
-          js_list = re.findall(r'<script(?:\\s[^>]*)?>(.*?)</script>', page, flags=re.S | re.I)
+          js_list = re.findall(r'<script(?:\s[^>]*)?>(.*?)</script>', page, flags=re.S | re.I)
           assert len(js_list) >= 2, 'Missing scripts'
           for i, js in enumerate(js_list):
               dest = f'/tmp/ai-business-os-{i}.js'
