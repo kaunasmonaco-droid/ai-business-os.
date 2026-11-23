@@ -1,0 +1,36 @@
+{
+  "title": "Research company websites",
+  "description": "Provide 1–10 official public HTTPS company website links. No paid APIs required.",
+  "type": "object",
+  "schemaVersion": 1,
+  "properties": {
+    "urls": {
+      "title": "Official company website URLs",
+      "type": "array",
+      "editor": "stringList",
+      "description": "1–10 public HTTPS websites; no internal URLs or private data.",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "maxItems": 10
+    },
+    "keywords": {
+      "title": "Relevant manufacturing keywords",
+      "type": "array",
+      "editor": "stringList",
+      "description": "Terms to match on public pages, e.g. metal fabrication, OEM, forging.",
+      "items": {
+        "type": "string"
+      },
+      "default": [
+        "manufacturing",
+        "metal",
+        "export"
+      ]
+    }
+  },
+  "required": [
+    "urls"
+  ]
+}
