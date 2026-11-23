@@ -1,0 +1,10 @@
+{
+  "actorSpecification": 1,
+  "name": "ai-business-os-company-profiler",
+  "title": "AI BUSINESS OS – Source-Verified Company Profiler",
+  "description": "Research up to 10 provided public company websites, detect topic keywords and generic business email contacts, and output source-backed JSON. Does not discover clients or guarantee demand.",
+  "version": "0.1",
+  "buildTag": "latest",
+  "input": "./input_schema.json",
+  "dockerfile": "./Dockerfile"
+}
