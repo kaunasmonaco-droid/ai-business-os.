@@ -156,7 +156,7 @@ def apify_get_input():
     token = os.getenv("APIFY_TOKEN")
     if not store or not token:
         return None
-    key = os.getenv("APIFY_INPUT_KEY", "INPUT")
+    key = os.getenv("ACTOR_INPUT_KEY", "INPUT")
     base = os.getenv("APIFY_API_BASE_URL", "https://api.apify.com").rstrip("/")
     url = f"{base}/v2/key-value-stores/{urllib.parse.quote(store)}/records/{urllib.parse.quote(key)}"
     req = urllib.request.Request(url, headers={"Authorization": f"Bearer {token}"})
