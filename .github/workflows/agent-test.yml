@@ -1,0 +1,23 @@
+name: Test AI BUSINESS OS research agent
+on:
+  push:
+    paths: ["actor/**", ".github/workflows/agent-test.yml"]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate agent Python and unit tests
+        run: |
+          python -m compileall -q actor/main.py actor/tests
+          python -m unittest discover -s actor/tests -v
+      - name: Validate Apify config schema JSON
+        run: |
+          python -m json.tool actor/.actor/actor.json > /dev/null
+          python -m json.tool actor/.actor/input_schema.json > /dev/null
