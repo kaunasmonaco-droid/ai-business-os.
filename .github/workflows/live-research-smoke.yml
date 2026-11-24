@@ -39,3 +39,25 @@ jobs:
           path: research-smoke.json
           if-no-files-found: warn
           retention-days: 7
+
+      - name: Research real industrial company websites
+        run: python actor/main.py --input actor/industrial_input.json --output industrial-research.json
+      - name: Verify honest industrial research results
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          data = json.loads(Path("industrial-research.json").read_text())
+          assert len(data) == 2, data
+          assert all(x["status"] in ("ok", "error") for x in data)
+          assert all(x["verified_buyer_interest"] is False for x in data)
+          assert all(x.get("source_url", "").startswith("https://") for x in data)
+          print("Industrial source check:", [(x["source_url"], x["status"]) for x in data])
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: industrial-research-results
+          path: industrial-research.json
+          if-no-files-found: warn
+          retention-days: 7
