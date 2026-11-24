@@ -1,0 +1,64 @@
+name: Live research smoke test (no emails or CRM writes)
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "actor/**"
+      - ".github/workflows/live-research-smoke.yml"
+permissions:
+  contents: read
+jobs:
+  public-website-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Fetch public test website
+        run: python actor/main.py --input actor/example_input.json --output research-smoke.json
+      - name: Verify real results
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          results = json.loads(Path("research-smoke.json").read_text())
+          assert len(results) == 1
+          item = results[0]
+          assert item["status"] == "ok", item
+          assert item["source_url"].startswith("https://example.com")
+          assert item["verified_buyer_interest"] is False
+          assert item["checked_at_utc"]
+          print("PASS: live public HTTPS fetch and parsed evidence")
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: public-website-smoke-results
+          path: research-smoke.json
+          if-no-files-found: warn
+          retention-days: 7
+
+      - name: Research real industrial company websites
+        run: python actor/main.py --input actor/industrial_input.json --output industrial-research.json
+      - name: Verify honest industrial research results
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          data = json.loads(Path("industrial-research.json").read_text())
+          assert len(data) == 2, data
+          assert all(x["status"] in ("ok", "error") for x in data)
+          assert any(x["status"] == "ok" for x in data), f"No industrial website could be read: {data}"
+          assert all(x["verified_buyer_interest"] is False for x in data)
+          assert all(x.get("source_url", "").startswith("https://") for x in data)
+          print("Industrial source check:", [(x["source_url"], x["status"]) for x in data])
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: industrial-research-results
+          path: industrial-research.json
+          if-no-files-found: warn
+          retention-days: 7
