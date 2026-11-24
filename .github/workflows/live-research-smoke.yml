@@ -50,6 +50,7 @@ jobs:
           data = json.loads(Path("industrial-research.json").read_text())
           assert len(data) == 2, data
           assert all(x["status"] in ("ok", "error") for x in data)
+          assert any(x["status"] == "ok" for x in data), f"No industrial website could be read: {data}"
           assert all(x["verified_buyer_interest"] is False for x in data)
           assert all(x.get("source_url", "").startswith("https://") for x in data)
           print("Industrial source check:", [(x["source_url"], x["status"]) for x in data])
