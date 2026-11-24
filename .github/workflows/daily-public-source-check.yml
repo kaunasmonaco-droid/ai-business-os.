@@ -1,0 +1,37 @@
+name: AI BUSINESS OS - daily public-source evidence check
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 7 * * 1-5"
+permissions:
+  contents: read
+jobs:
+  public-source-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate research agent
+        run: |
+          python -m compileall -q actor/main.py actor/tests
+          python -m unittest discover -s actor/tests -v
+      - name: Check public industrial contractor websites
+        run: |
+          cat > /tmp/research-input.json <<'JSON'
+          {
+            "urls": ["https://techer.lt", "https://oss.lt"],
+            "keywords": ["vamzdyn", "piping", "industrial", "installation", "benelux", "project"]
+          }
+          JSON
+          python actor/main.py --input /tmp/research-input.json --output /tmp/research-results.json
+      - name: Publish timestamped evidence artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: public-source-check-${{ github.run_number }}
+          path: /tmp/research-results.json
+          if-no-files-found: warn
+          retention-days: 14
