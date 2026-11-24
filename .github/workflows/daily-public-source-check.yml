@@ -27,6 +27,29 @@ jobs:
           }
           JSON
           python actor/main.py --input /tmp/research-input.json --output /tmp/research-results.json
+      - name: Audit results and mark all-failed checks as failed
+        if: always()
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path("/tmp/research-results.json")
+          with open(Path(__import__("os").environ["GITHUB_STEP_SUMMARY"]), "a") as out:
+              out.write("## AI BUSINESS OS: public-source evidence check\n\n")
+              if not p.exists():
+                  out.write("No result file was produced. **FAILED**.\n")
+                  raise SystemExit("Research agent produced no output")
+              rows = json.loads(p.read_text())
+              ok = [r for r in rows if r.get("status") == "ok"]
+              errors = [r for r in rows if r.get("status") != "ok"]
+              out.write(f"Sources checked: {len(rows)}; readable: {len(ok)}; errors: {len(errors)}.\n\n")
+              out.write("**This is website profiling, NOT verified tenders or purchase intent.**\n\n")
+              for row in rows:
+                  out.write(f"- {row.get('source_url')}: {row.get('status')}; keyword matches: {row.get('keyword_match_count', 0)}\n")
+              if not ok:
+                  out.write("\n**FAILED: no readable source websites.**\n")
+                  raise SystemExit("All website checks failed; review URL, network, and logs")
+          PY
       - name: Publish timestamped evidence artifact
         if: always()
         uses: actions/upload-artifact@v4
