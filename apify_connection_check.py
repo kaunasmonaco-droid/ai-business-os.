@@ -31,15 +31,19 @@ def main():
         print("APIFY_CHECK recent_runs=" + json.dumps([{k:x.get(k) for k in ("id","status","buildNumber","startedAt")} for x in recent.get("items",[])]), flush=True)
         builds = get("acts/" + actor + "/builds?limit=5&desc=true", token, "actor_builds")
         print("APIFY_CHECK builds=" + json.dumps([{k:b.get(k) for k in ("id","status","buildNumber","startedAt","finishedAt")} for b in builds.get("items",[])]), flush=True)
-        if builds.get("items") and builds["items"][0].get("buildNumber") == "0.0.45" and builds["items"][0].get("status") == "SUCCEEDED" and not any(x.get("buildNumber") == "0.0.45" for x in recent.get("items", [])):
-            payload = {"discovery_country":"LT","keywords":["metalo apdirbimas","CNC","metal fabrication","cnc machining","metalworking"],"result_limit":5,"sales_pipeline":True,"sync_hubspot":False}
-            req = urllib.request.Request("https://api.apify.com/v2/acts/"+actor+"/runs?build=0.0.45&timeout=180&maxTotalChargeUsd=0.01",data=json.dumps(payload).encode(),headers={"Authorization":"Bearer "+token,"Content-Type":"application/json"},method="POST")
+        test = get("actor-runs/kpxl6LiDaBZ7U3kFK", token, "enrichment_result")
+        print("APIFY_CHECK enrichment_status="+str(test.get("status")),flush=True)
+        print("APIFY_CHECK enrichment_cost="+str(test.get("usageTotalUsd")),flush=True)
+        for path,label in [(("datasets/"+test["defaultDatasetId"]+"/items?limit=10") if test.get("defaultDatasetId") else None,"enrichment_items"),(("key-value-stores/"+test["defaultKeyValueStoreId"]+"/records/PROPOSAL_DRAFTS") if test.get("defaultKeyValueStoreId") else None,"proposal_drafts")]:
+            if not path:
+                continue
             try:
-                with urllib.request.urlopen(req,timeout=15) as response:
-                    run=json.load(response).get("data",{})
-                    print("APIFY_CHECK enrichment_test_run="+str(run.get("id")),flush=True)
+                req=urllib.request.Request("https://api.apify.com/v2/"+path,headers={"Authorization":"Bearer "+token})
+                with urllib.request.urlopen(req,timeout=12) as response:
+                    items=json.load(response)
+                    print("APIFY_CHECK "+label+"="+json.dumps([{k:x.get(k) for k in ("status","source_url","lead_priority","qualification_stage","dedup_key","requires_human_approval")} | {"enrichment_count":len(x.get("enrichment_sources",[]))} for x in items if isinstance(x,dict)]),flush=True)
             except Exception as exc:
-                print("APIFY_CHECK enrichment_test_error="+type(exc).__name__,flush=True)
+                print("APIFY_CHECK "+label+"_error="+type(exc).__name__,flush=True)
         discovery = get("actor-runs/UJjwP1hXeVhtwwl37", token, "discovery_result")
         print("APIFY_CHECK discovery_status="+str(discovery.get("status")),flush=True)
         print("APIFY_CHECK discovery_cost="+str(discovery.get("usageTotalUsd")),flush=True)
