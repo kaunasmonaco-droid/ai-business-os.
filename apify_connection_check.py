@@ -31,15 +31,17 @@ def main():
         print("APIFY_CHECK recent_runs=" + json.dumps([{k:x.get(k) for k in ("id","status","buildNumber","startedAt")} for x in recent.get("items",[])]), flush=True)
         builds = get("acts/" + actor + "/builds?limit=5&desc=true", token, "actor_builds")
         print("APIFY_CHECK builds=" + json.dumps([{k:b.get(k) for k in ("id","status","buildNumber","startedAt","finishedAt")} for b in builds.get("items",[])]), flush=True)
-        if builds.get("items") and builds["items"][0].get("buildNumber") == "0.0.43" and builds["items"][0].get("status") == "SUCCEEDED" and not any(x.get("buildNumber") == "0.0.43" for x in recent.get("items", [])):
-            payload = {"discovery_country":"LT","keywords":["metalo apdirbimas","CNC","metal fabrication"],"result_limit":3,"sales_pipeline":False,"sync_hubspot":False}
-            req = urllib.request.Request("https://api.apify.com/v2/acts/"+actor+"/runs?build=0.0.43&timeout=120&maxTotalChargeUsd=0.01",data=json.dumps(payload).encode(),headers={"Authorization":"Bearer "+token,"Content-Type":"application/json"},method="POST")
+        discovery = get("actor-runs/UJjwP1hXeVhtwwl37", token, "discovery_result")
+        print("APIFY_CHECK discovery_status="+str(discovery.get("status")),flush=True)
+        print("APIFY_CHECK discovery_cost="+str(discovery.get("usageTotalUsd")),flush=True)
+        if discovery.get("defaultDatasetId"):
+            req = urllib.request.Request("https://api.apify.com/v2/datasets/"+discovery["defaultDatasetId"]+"/items?limit=5",headers={"Authorization":"Bearer "+token})
             try:
-                with urllib.request.urlopen(req,timeout=15) as response:
-                    run = json.load(response).get("data",{})
-                    print("APIFY_CHECK discovery_test_run="+str(run.get("id")),flush=True)
+                with urllib.request.urlopen(req,timeout=12) as response:
+                    items=json.load(response)
+                    print("APIFY_CHECK discovery_items="+json.dumps([{k:x.get(k) for k in ("status","source_url","title","lead_priority","error")} for x in items if isinstance(x,dict)]),flush=True)
             except Exception as exc:
-                print("APIFY_CHECK discovery_test_error="+type(exc).__name__,flush=True)
+                print("APIFY_CHECK discovery_read_error="+type(exc).__name__,flush=True)
         validation = get("actor-runs/ZDFBEUzKzlWp3DiJE", token, "validation_result")
         print("APIFY_CHECK validation_status=" + str(validation.get("status")), flush=True)
         print("APIFY_CHECK validation_cost=" + str(validation.get("usageTotalUsd")), flush=True)
