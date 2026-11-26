@@ -33,6 +33,15 @@ def main():
         for b in builds.get("items",[])[:2]:
             if b.get("status") == "FAILED":
                 detail = get("actor-builds/" + b["id"], token, "failed_build")
+                req = urllib.request.Request("https://api.apify.com/v2/logs/" + b["id"], headers={"Authorization":"Bearer " + token})
+                try:
+                    with urllib.request.urlopen(req, timeout=12) as response:
+                        lines = response.read(65536).decode("utf-8", "replace").splitlines()
+                        for line in lines:
+                            if any(w in line.lower() for w in ("schema", "error", "invalid", "failed")) and not any(w in line.lower() for w in ("token", "secret", "password", "authorization", "credential", "https://")):
+                                print("APIFY_CHECK build_log=" + line[:350], flush=True)
+                except Exception as exc:
+                    print("APIFY_CHECK build_log_error=" + type(exc).__name__, flush=True)
                 print("APIFY_CHECK build_error=" + json.dumps({k:detail.get(k) for k in ("statusMessage","exitCode")}), flush=True)
         run = get("actor-runs/Pd0hJbpIvLsYGXOVx", token, "smoke_result")
         print("APIFY_CHECK smoke_status=" + str(run.get("status")), flush=True)
