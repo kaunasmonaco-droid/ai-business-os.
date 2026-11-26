@@ -1,4 +1,5 @@
 import os
+import urllib.parse
 import urllib.request
 import urllib.error
 import json
@@ -21,7 +22,7 @@ def main():
     if not token:
         print("APIFY_CHECK missing_token", flush=True)
         return
-    actor = os.environ.get("APIFY_ACTOR_ID", "aibusinessos~ai-business-agent")
+    actor = os.environ.get("APIFY_ACTOR_ID", "Sd25i6lor4ut8EwDa")
     data = get("acts/" + urllib.parse.quote(actor, safe="~"), token, "actor")
     if data.get("id"):
         print("APIFY_CHECK read_ok", flush=True)
