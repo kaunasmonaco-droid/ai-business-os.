@@ -31,16 +31,12 @@ def main():
         print("APIFY_CHECK recent_runs=" + json.dumps([{k:x.get(k) for k in ("id","status","buildNumber","startedAt")} for x in recent.get("items",[])]), flush=True)
         builds = get("acts/" + actor + "/builds?limit=3&desc=true", token, "actor_builds")
         print("APIFY_CHECK builds=" + json.dumps([{k:b.get(k) for k in ("id","status","buildNumber","startedAt","finishedAt")} for b in builds.get("items",[])]), flush=True)
-        # One bounded validation, guarded by a durable actor run listing.
-        validation = get("acts/" + actor + "/runs?limit=100&desc=true", token, "validation_history")
-        if validation.get("items") and not any(x.get("buildNumber") == "0.0.42" for x in validation["items"]) and any(b.get("buildNumber") == "0.0.42" and b.get("status") == "SUCCEEDED" for b in builds.get("items",[])):
-            req = urllib.request.Request("https://api.apify.com/v2/acts/" + actor + "/runs?build=0.0.42&timeout=60&maxTotalChargeUsd=0.01", data=json.dumps({"urls":["https://www.rittal.com"],"sales_pipeline":False,"sync_hubspot":False}).encode(), headers={"Authorization":"Bearer " + token,"Content-Type":"application/json"}, method="POST")
-            try:
-                with urllib.request.urlopen(req, timeout=12) as response:
-                    result = json.load(response).get("data",{})
-                    print("APIFY_CHECK validation_run=" + str(result.get("id")), flush=True)
-            except Exception as exc:
-                print("APIFY_CHECK validation_error=" + type(exc).__name__, flush=True)
+        validation = get("actor-runs/ZDFBEUzKzlWp3DiJE", token, "validation_result")
+        print("APIFY_CHECK validation_status=" + str(validation.get("status")), flush=True)
+        print("APIFY_CHECK validation_cost=" + str(validation.get("usageTotalUsd")), flush=True)
+        if validation.get("defaultDatasetId"):
+            ds = get("datasets/" + validation["defaultDatasetId"], token, "validation_dataset")
+            print("APIFY_CHECK validation_count=" + str(ds.get("itemCount")), flush=True)
         for b in builds.get("items",[])[:2]:
             if b.get("status") == "FAILED":
                 detail = get("actor-builds/" + b["id"], token, "failed_build")
