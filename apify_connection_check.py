@@ -27,6 +27,13 @@ def main():
     if data.get("id"):
         print("APIFY_CHECK read_ok", flush=True)
         return
+    for index, candidate in enumerate(["Sd25i6Ior4ut8EwDa", "Sd25i6lor4ut8EwDa", "Sd25i6ior4ut8EwDa", "aibusinessos~ai-business-agent"]):
+        if candidate == actor:
+            continue
+        found = get("acts/" + urllib.parse.quote(candidate, safe="~"), token, "candidate_" + str(index))
+        if found.get("id"):
+            print("APIFY_CHECK resolved_read_ok actor_id=" + found["id"], flush=True)
+            return
     get("users/me", token, "identity")
     listing = get("acts?limit=100", token, "actor_list")
     for item in listing.get("items", []):
