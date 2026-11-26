@@ -28,6 +28,8 @@ def main():
     if data.get("id"):
         print("APIFY_CHECK read_ok", flush=True)
         get("acts/" + actor + "/runs?limit=1", token, "actor_runs")
+        if os.environ.get("APIFY_SMOKE_TEST") == "1":
+            print("APIFY_CHECK smoke_test_enabled", flush=True)
         return
     for index, candidate in enumerate(["Sd25i6Ior4ut8EwDa", "Sd25i6lor4ut8EwDa", "Sd25i6ior4ut8EwDa", "aibusinessos~ai-business-agent"]):
         if candidate == actor:
