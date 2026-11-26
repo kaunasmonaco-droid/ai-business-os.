@@ -31,7 +31,15 @@ def main():
         run = get("actor-runs/Pd0hJbpIvLsYGXOVx", token, "smoke_result")
         print("APIFY_CHECK smoke_status=" + str(run.get("status")), flush=True)
         if run.get("defaultDatasetId"):
-            get("datasets/" + run["defaultDatasetId"], token, "smoke_dataset")
+            dataset = get("datasets/" + run["defaultDatasetId"], token, "smoke_dataset")
+            print("APIFY_CHECK dataset_item_count=" + str(dataset.get("itemCount")), flush=True)
+            req = urllib.request.Request("https://api.apify.com/v2/datasets/" + run["defaultDatasetId"] + "/items?limit=5", headers={"Authorization":"Bearer " + token})
+            try:
+                with urllib.request.urlopen(req, timeout=12) as response:
+                    items = json.load(response)
+                    print("APIFY_CHECK result_summary=" + json.dumps([{"status":x.get("status"),"keys":sorted(x.keys())} for x in items if isinstance(x,dict)]), flush=True)
+            except Exception as exc:
+                print("APIFY_CHECK dataset_items_error=" + type(exc).__name__, flush=True)
         return
     for index, candidate in enumerate(["Sd25i6Ior4ut8EwDa", "Sd25i6lor4ut8EwDa", "Sd25i6ior4ut8EwDa", "aibusinessos~ai-business-agent"]):
         if candidate == actor:
