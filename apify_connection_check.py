@@ -27,6 +27,7 @@ def main():
     data = get("acts/" + urllib.parse.quote(actor, safe="~"), token, "actor")
     if data.get("id"):
         print("APIFY_CHECK read_ok", flush=True)
+        get("acts/" + actor + "/runs?limit=1", token, "actor_runs")
         return
     for index, candidate in enumerate(["Sd25i6Ior4ut8EwDa", "Sd25i6lor4ut8EwDa", "Sd25i6ior4ut8EwDa", "aibusinessos~ai-business-agent"]):
         if candidate == actor:
