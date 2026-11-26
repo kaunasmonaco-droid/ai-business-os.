@@ -28,17 +28,10 @@ def main():
     if data.get("id"):
         print("APIFY_CHECK read_ok", flush=True)
         get("acts/" + actor + "/runs?limit=1", token, "actor_runs")
-        if os.environ.get("APIFY_SMOKE_TEST") == "1":
-            payload = {"urls":["https://www.rittal.com"],"sales_pipeline":False,"sync_hubspot":False}
-            req = urllib.request.Request("https://api.apify.com/v2/acts/" + actor + "/runs?timeout=60&maxTotalChargeUsd=0.01", data=json.dumps(payload).encode(), headers={"Authorization":"Bearer " + token,"Content-Type":"application/json"}, method="POST")
-            try:
-                with urllib.request.urlopen(req, timeout=20) as response:
-                    run = json.load(response).get("data", {})
-                    print("APIFY_CHECK smoke_run http=" + str(response.status) + " id=" + str(run.get("id")) + " status=" + str(run.get("status")), flush=True)
-            except urllib.error.HTTPError as exc:
-                print("APIFY_CHECK smoke_run http=" + str(exc.code), flush=True)
-            except Exception as exc:
-                print("APIFY_CHECK smoke_run error=" + type(exc).__name__, flush=True)
+        run = get("actor-runs/Pd0hJbpIvLsYGXOVx", token, "smoke_result")
+        print("APIFY_CHECK smoke_status=" + str(run.get("status")), flush=True)
+        if run.get("defaultDatasetId"):
+            get("datasets/" + run["defaultDatasetId"], token, "smoke_dataset")
         return
     for index, candidate in enumerate(["Sd25i6Ior4ut8EwDa", "Sd25i6lor4ut8EwDa", "Sd25i6ior4ut8EwDa", "aibusinessos~ai-business-agent"]):
         if candidate == actor:
