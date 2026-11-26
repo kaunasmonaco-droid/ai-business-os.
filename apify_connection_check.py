@@ -23,7 +23,7 @@ def main():
         print("APIFY_CHECK missing_token", flush=True)
         return
     token = token.strip()
-    actor = os.environ.get("APIFY_ACTOR_ID", "Sd25i6lor4ut8EwDa")
+    actor = "Sd25i6Ior4ut8EwDa"
     data = get("acts/" + urllib.parse.quote(actor, safe="~"), token, "actor")
     if data.get("id"):
         print("APIFY_CHECK read_ok", flush=True)
