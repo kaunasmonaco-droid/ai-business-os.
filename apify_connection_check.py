@@ -22,7 +22,6 @@ def main():
     if not token:
         print("APIFY_CHECK missing_token", flush=True)
         return
-    print("APIFY_CHECK token_matches_latest=" + str(token.strip().endswith("eSc5")), flush=True)
     token = token.strip()
     actor = os.environ.get("APIFY_ACTOR_ID", "Sd25i6lor4ut8EwDa")
     data = get("acts/" + urllib.parse.quote(actor, safe="~"), token, "actor")
@@ -36,6 +35,7 @@ def main():
         if found.get("id"):
             print("APIFY_CHECK resolved_read_ok actor_id=" + found["id"], flush=True)
             return
+    get("acts/" + urllib.parse.quote(actor, safe="~") + "/runs?limit=1", token, "actor_runs")
     get("users/me", token, "identity")
     listing = get("acts?limit=100", token, "actor_list")
     for item in listing.get("items", []):
