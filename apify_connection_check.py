@@ -29,7 +29,7 @@ def main():
         print("APIFY_CHECK read_ok", flush=True)
         recent = get("acts/" + actor + "/runs?limit=5&desc=true", token, "actor_runs")
         print("APIFY_CHECK recent_runs=" + json.dumps([{k:x.get(k) for k in ("id","status","buildNumber","startedAt")} for x in recent.get("items",[])]), flush=True)
-        builds = get("acts/" + actor + "/builds?limit=3&desc=true", token, "actor_builds")
+        builds = get("acts/" + actor + "/builds?limit=5&desc=true", token, "actor_builds")
         print("APIFY_CHECK builds=" + json.dumps([{k:b.get(k) for k in ("id","status","buildNumber","startedAt","finishedAt")} for b in builds.get("items",[])]), flush=True)
         validation = get("actor-runs/ZDFBEUzKzlWp3DiJE", token, "validation_result")
         print("APIFY_CHECK validation_status=" + str(validation.get("status")), flush=True)
