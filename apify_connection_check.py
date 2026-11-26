@@ -30,6 +30,10 @@ def main():
         get("acts/" + actor + "/runs?limit=1", token, "actor_runs")
         builds = get("acts/" + actor + "/builds?limit=3&desc=true", token, "actor_builds")
         print("APIFY_CHECK builds=" + json.dumps([{k:b.get(k) for k in ("id","status","buildNumber","startedAt","finishedAt")} for b in builds.get("items",[])]), flush=True)
+        for b in builds.get("items",[])[:2]:
+            if b.get("status") == "FAILED":
+                detail = get("actor-builds/" + b["id"], token, "failed_build")
+                print("APIFY_CHECK build_error=" + json.dumps({k:detail.get(k) for k in ("statusMessage","exitCode")}), flush=True)
         run = get("actor-runs/Pd0hJbpIvLsYGXOVx", token, "smoke_result")
         print("APIFY_CHECK smoke_status=" + str(run.get("status")), flush=True)
         if run.get("defaultDatasetId"):
