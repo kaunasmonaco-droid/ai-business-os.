@@ -22,6 +22,8 @@ def main():
     if not token:
         print("APIFY_CHECK missing_token", flush=True)
         return
+    print("APIFY_CHECK token_matches_latest=" + str(token.strip().endswith("eSc5")), flush=True)
+    token = token.strip()
     actor = os.environ.get("APIFY_ACTOR_ID", "Sd25i6lor4ut8EwDa")
     data = get("acts/" + urllib.parse.quote(actor, safe="~"), token, "actor")
     if data.get("id"):
