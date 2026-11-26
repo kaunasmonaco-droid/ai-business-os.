@@ -31,6 +31,14 @@ def main():
         print("APIFY_CHECK recent_runs=" + json.dumps([{k:x.get(k) for k in ("id","status","buildNumber","startedAt")} for x in recent.get("items",[])]), flush=True)
         builds = get("acts/" + actor + "/builds?limit=5&desc=true", token, "actor_builds")
         print("APIFY_CHECK builds=" + json.dumps([{k:b.get(k) for k in ("id","status","buildNumber","startedAt","finishedAt")} for b in builds.get("items",[])]), flush=True)
+        if builds.get("items") and builds["items"][0].get("buildNumber") == "0.0.46" and builds["items"][0].get("status") == "SUCCEEDED" and not any(x.get("buildNumber") == "0.0.46" for x in recent.get("items", [])):
+            payload = {"urls":["https://www.abflt.com/"],"sales_pipeline":False,"sync_hubspot":False}
+            req = urllib.request.Request("https://api.apify.com/v2/acts/"+actor+"/runs?build=0.0.46&timeout=60&maxTotalChargeUsd=0.01",data=json.dumps(payload).encode(),headers={"Authorization":"Bearer "+token,"Content-Type":"application/json"},method="POST")
+            try:
+                with urllib.request.urlopen(req,timeout=15) as response:
+                    print("APIFY_CHECK contract_test_run="+str(json.load(response).get("data",{}).get("id")),flush=True)
+            except Exception as exc:
+                print("APIFY_CHECK contract_test_error="+type(exc).__name__,flush=True)
         test = get("actor-runs/kpxl6LiDaBZ7U3kFK", token, "enrichment_result")
         print("APIFY_CHECK enrichment_status="+str(test.get("status")),flush=True)
         print("APIFY_CHECK enrichment_cost="+str(test.get("usageTotalUsd")),flush=True)
