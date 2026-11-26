@@ -27,7 +27,8 @@ def main():
     data = get("acts/" + urllib.parse.quote(actor, safe="~"), token, "actor")
     if data.get("id"):
         print("APIFY_CHECK read_ok", flush=True)
-        get("acts/" + actor + "/runs?limit=1", token, "actor_runs")
+        recent = get("acts/" + actor + "/runs?limit=5&desc=true", token, "actor_runs")
+        print("APIFY_CHECK recent_runs=" + json.dumps([{k:x.get(k) for k in ("id","status","buildNumber","startedAt")} for x in recent.get("items",[])]), flush=True)
         builds = get("acts/" + actor + "/builds?limit=3&desc=true", token, "actor_builds")
         print("APIFY_CHECK builds=" + json.dumps([{k:b.get(k) for k in ("id","status","buildNumber","startedAt","finishedAt")} for b in builds.get("items",[])]), flush=True)
         for b in builds.get("items",[])[:2]:
