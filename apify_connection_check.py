@@ -53,7 +53,7 @@ def main():
                 req=urllib.request.Request("https://api.apify.com/v2/"+path,headers={"Authorization":"Bearer "+token})
                 with urllib.request.urlopen(req,timeout=12) as response:
                     items=json.load(response)
-                    print("APIFY_CHECK "+label+"="+json.dumps([{k:x.get(k) for k in ("status","source_url","lead_priority","qualification_stage","dedup_key","requires_human_approval")} | {"enrichment_count":len(x.get("enrichment_sources",[]))} for x in items if isinstance(x,dict)]),flush=True)
+                    print("APIFY_CHECK "+label+"="+json.dumps([{k:x.get(k) for k in ("status","source_url","lead_priority","qualification_stage","dedup_key","requires_human_approval","recipient","company","subject")} | {"enrichment_count":len(x.get("enrichment_sources",[]))} for x in items if isinstance(x,dict)]),flush=True)
             except Exception as exc:
                 print("APIFY_CHECK "+label+"_error="+type(exc).__name__,flush=True)
         discovery = get("actor-runs/UJjwP1hXeVhtwwl37", token, "discovery_result")
