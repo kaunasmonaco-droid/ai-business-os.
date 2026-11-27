@@ -1,4 +1,7 @@
-import os,json,hmac,re,urllib.request,urllib.error
+import os,json,hmac,re,urllib.request,urllib.error,threading,time
+LOCK=threading.Lock()
+LAST_RUN=0
+RUN_COUNT=0
 from http.server import BaseHTTPRequestHandler,ThreadingHTTPServer
 from pathlib import Path
 ACTOR="Sd25i6Ior4ut8EwDa"
@@ -36,7 +39,12 @@ class Handler(BaseHTTPRequestHandler):
             country=x.get("country","");keywords=x.get("keywords",[])
             if not isinstance(country,str) or not re.fullmatch("[A-Z]{2}",country) or not isinstance(keywords,list) or not 1<=len(keywords)<=8 or not all(isinstance(k,str) and 1<=len(k)<=100 for k in keywords): return self.reply(400,{"error":"Invalid task"})
             payload={"discovery_country":country,"keywords":keywords,"result_limit":5,"sales_pipeline":False,"sync_hubspot":False}
-            data=api("acts/"+ACTOR+"/runs?build=0.0.46&timeout=120&maxTotalChargeUsd=0.01",payload)["data"]
+            global LAST_RUN,RUN_COUNT
+            with LOCK:
+                if RUN_COUNT>=10 or time.monotonic()-LAST_RUN<120 and LAST_RUN!=0: return self.reply(429,{"error":"Test limit or cooldown reached"})
+                LAST_RUN=time.monotonic()
+                RUN_COUNT+=1
+                data=api("acts/"+ACTOR+"/runs?build=0.0.46&timeout=120&maxTotalChargeUsd=0.01",payload)["data"]
             return self.reply(202,{"id":data["id"],"status":data["status"]})
         except Exception: return self.reply(502,{"error":"Request failed; verify run history before retrying"})
 if __name__=="__main__":
