@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "execution": "on_demand",
+  "director": "ceo",
+  "roles": [
+    "developer",
+    "project_manager",
+    "marketing",
+    "accounting",
+    "sales",
+    "recruiting",
+    "social_media",
+    "customer_support",
+    "quality_inspector",
+    "systems_admin"
+  ],
+  "quality": {
+    "states": [
+      "PASS",
+      "FIX",
+      "STOP"
+    ],
+    "max_retries": 2,
+    "independent_review": true,
+    "require_evidence": true
+  },
+  "approval": {
+    "external_messages": "required",
+    "publication": "required",
+    "payments": "required",
+    "deletion": "required",
+    "production_deploy": "required"
+  },
+  "limits": {
+    "parallel_workers": 1,
+    "paid_api_calls": false
+  },
+  "memory": {
+    "shared": true,
+    "persistent_storage_required": true,
+    "deduplicate": true
+  },
+  "status": "configuration_only"
+}
